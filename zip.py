@@ -1,9 +1,17 @@
-inp = raw_input()
-splits = inp.split()
+import sys
+inp = sys.stdin.readlines()
+splits = []
 rank = []
 songs = {}
+i = 0
+while len(inp) > i:
+    splits = splits + (inp[i].split())
+    i = i + 1
 #calculate rank using zipf's law
 #store ranks in a list
+#for i in range(9):
+#    print splits[i]
+
 i = 1
 while i <= int(splits[0]):
     testval = int(splits[i*2])
