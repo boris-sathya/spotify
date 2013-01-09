@@ -17,20 +17,27 @@ while i <= int(splits[0]):
     ref = int(splits[2])/i
     q = float(testval)/float(ref)
     meta = []
-    meta.append(splits[(i*2)+1])
     meta.append(i)
+    meta.append(splits[(i*2)+1])
     ranked_meta = []
     ranked_meta.append(q)
     ranked_meta.append(meta)
     rank.append(ranked_meta)
     i = i+1
 
+rank.sort(key=itemgetter(0))
 #sort the list according to quality rank(qi) and fetch the corresponding song's#name from dictionary
 i=1
-rank.sort(key=itemgetter(0))
 while int(splits[1]) >= i:
-    if(rank[-i][0] == rank[-i-1][0]):
-        rank[-i], rank[-i-1] = rank[-i-1],rank[-i]     
-    print rank[-i][1][0]
-    i = i + 1
+   dups = []
+   for o, sublist in enumerate(rank):
+       if rank[-1][0] in sublist:
+           dups.append(o)
+   result = min(rank[p][1][0] for p in dups)
+   for o, sublist in enumerate(rank):
+       if result in sublist[1]:
+           print rank[o][1][1]
+           del rank[o]
+   i = i + 1
+
 
