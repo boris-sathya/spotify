@@ -3,7 +3,6 @@ from operator import itemgetter
 inp = sys.stdin.readlines()
 splits = []
 rank = []
-songs = {}
 i = 0
 while len(inp) > i:
     splits = splits + (inp[i].split())
