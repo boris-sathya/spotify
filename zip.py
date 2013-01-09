@@ -3,7 +3,17 @@ from operator import itemgetter
 inp = sys.stdin.readlines()
 splits = []
 rank = []
+lastelement = -1
 i = 0
+
+def dupcheck(rank):
+    global lastelement
+    if(rank[lastelement][0]==rank[lastelement-1][0]):
+        lastelement = lastelement - 1
+        return 1
+    else:
+        return 0
+
 while len(inp) > i:
     splits = splits + (inp[i].split())
     i = i + 1
@@ -28,15 +38,10 @@ rank.sort(key=itemgetter(0))
 #sort the list according to quality rank(qi) and fetch the corresponding song's#name from dictionary
 i=1
 while int(splits[1]) >= i:
-   dups = []
-   for o, sublist in enumerate(rank):
-       if rank[-1][0] in sublist:
-           dups.append(o)
-   result = min(rank[p][1][0] for p in dups)
-   for o, sublist in enumerate(rank):
-       if result in sublist[1]:
-           print rank[o][1][1]
-           del rank[o]
-   i = i + 1
-
-
+    duplicate = 1
+    while(duplicate):
+        duplicate = dupcheck(rank)
+    print rank[lastelement][1][1]
+    del rank[lastelement]
+    lastelement = -1       
+    i = i + 1
