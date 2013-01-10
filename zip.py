@@ -38,6 +38,9 @@ rank.sort(key=itemgetter(0))
 #sort the list according to quality rank(qi) and fetch the corresponding song's#name from dictionary
 i=1
 while int(splits[1]) >= i:
+    if len(rank) == 1:
+        print rank[lastelement][1][1]
+        break
     duplicate = 1
     while(duplicate):
         duplicate = dupcheck(rank)
