@@ -8,6 +8,8 @@ i = 0
 
 def dupcheck(rank):
     global lastelement
+    if((lastelement + len(rank)) == 0):
+        return 0
     if(rank[lastelement][0]==rank[lastelement-1][0]):
         lastelement = lastelement - 1
         return 1
