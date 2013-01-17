@@ -25,8 +25,8 @@ while i <= int(splits[0]):
     i = i+1
 
 #two key sort (Rev Sort based on rank and Sort based on ID)
-sorted_list = sorted(songlist, key=lambda d: (-d['rank'], d['id']))
+songlist.sort(key=itemgetter('rank'),reverse=True)
 i = 0
 while int(splits[1]) > i:
-    print sorted_list[i]['name']
+    print songlist[i]['name']
     i = i + 1
