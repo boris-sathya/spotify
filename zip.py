@@ -2,51 +2,31 @@ import sys
 from operator import itemgetter
 inp = sys.stdin.readlines()
 splits = []
-rank = []
-lastelement = -1
+songlist = []
 i = 0
 
-def dupcheck(rank):
-    global lastelement
-    if((lastelement + len(rank)) == 0):
-        return 0
-    if(rank[lastelement][0]==rank[lastelement-1][0]):
-        lastelement = lastelement - 1
-        return 1
-    else:
-        return 0
-
+#Chops Input Data into a list
 while len(inp) > i:
     splits = splits + (inp[i].split())
     i = i + 1
-#calculate rank using zipf's law
-#store ranks in a list
 
+#calculate rank using zipf's law
+#store rank and  meta data in a list of dictionaries
 i = 1
 while i <= int(splits[0]):
     testval = int(splits[i*2])
     ref = int(splits[2])/i
     q = float(testval)/float(ref)
-    meta = []
-    meta.append(i)
-    meta.append(splits[(i*2)+1])
-    ranked_meta = []
-    ranked_meta.append(q)
-    ranked_meta.append(meta)
-    rank.append(ranked_meta)
+    meta = {}
+    meta['id'] = i
+    meta['name'] = splits[(i*2)+1]
+    meta['rank'] = q
+    songlist.append(meta)
     i = i+1
 
-rank.sort(key=itemgetter(0))
-#sort the list according to quality rank(qi) and fetch the corresponding song's#name from dictionary
-i=1
-while int(splits[1]) >= i:
-    if len(rank) == 1:
-        print rank[lastelement][1][1]
-        break
-    duplicate = 1
-    while(duplicate):
-        duplicate = dupcheck(rank)
-    print rank[lastelement][1][1]
-    del rank[lastelement]
-    lastelement = -1       
+#two key sort (Rev Sort based on rank and Sort based on ID)
+sorted_list = sorted(songlist, key=lambda d: (-d['rank'], d['id']))
+i = 0
+while int(splits[1]) > i:
+    print sorted_list[i]['name']
     i = i + 1
